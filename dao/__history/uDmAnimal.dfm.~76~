@@ -1,0 +1,228 @@
+object DmAnimal: TDmAnimal
+  OldCreateOrder = False
+  Height = 346
+  Width = 348
+  object sqlPesquisar: TSQLDataSet
+    CommandText = 
+      'select a.id, a.tag,a.fazenda_id,f.nome  From Animal a'#13#10'Inner Joi' +
+      'n Fazenda f on (f.id = a.fazenda_id) '#13#10'where tag like :tag'
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftString
+        Name = 'tag'
+        ParamType = ptInput
+      end>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 24
+    Top = 16
+  end
+  object sqlInserir: TSQLDataSet
+    CommandText = 'insert into animal (tag,fazenda_id) values (:tag, :fazenda_id)'
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftString
+        Name = 'tag'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftInteger
+        Name = 'fazenda_id'
+        ParamType = ptInput
+      end>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 88
+    Top = 16
+  end
+  object sqlAlterar: TSQLDataSet
+    CommandText = 
+      'update animal set tag = :tag, fazenda_id = :fazenda_id where (id' +
+      ' = :id)'
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftString
+        Name = 'tag'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftInteger
+        Name = 'fazenda_id'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftInteger
+        Name = 'id'
+        ParamType = ptInput
+      end>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 152
+    Top = 16
+  end
+  object sqlExcluir: TSQLDataSet
+    CommandText = 'delete from animal where id =:id'
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'id'
+        ParamType = ptInput
+      end>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 216
+    Top = 16
+  end
+  object dsPesquisar: TDataSetProvider
+    DataSet = qryPesquisar
+    Left = 80
+    Top = 200
+  end
+  object cdsPesquisar: TClientDataSet
+    Aggregates = <>
+    PacketRecords = 0
+    Params = <
+      item
+        DataType = ftString
+        Name = 'tag'
+        ParamType = ptInput
+      end>
+    ProviderName = 'dsPesquisar'
+    Left = 80
+    Top = 144
+    object cdsPesquisarTAG: TIntegerField
+      DisplayLabel = 'Tag'
+      FieldName = 'TAG'
+      Required = True
+    end
+    object cdsPesquisarFAZENDA_ID: TIntegerField
+      FieldName = 'FAZENDA_ID'
+      Required = True
+    end
+    object cdsPesquisarNOME: TStringField
+      FieldName = 'NOME'
+      ReadOnly = True
+      Size = 50
+    end
+    object cdsPesquisarID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+  end
+  object sqlFazendas: TSQLDataSet
+    Active = True
+    CommandText = 'select * from fazenda'
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 285
+    Top = 18
+    object sqlFazendasID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object sqlFazendasNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object sqlFazendasENDERECO: TStringField
+      FieldName = 'ENDERECO'
+      Size = 200
+    end
+    object sqlFazendasCNPJ: TStringField
+      FieldName = 'CNPJ'
+      Size = 14
+    end
+  end
+  object dsFazendas: TDataSetProvider
+    DataSet = sqlFazendas
+    Left = 280
+    Top = 72
+  end
+  object cdsFazendas: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dsFazendas'
+    Left = 280
+    Top = 128
+    object cdsFazendasID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsFazendasNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object cdsFazendasENDERECO: TStringField
+      FieldName = 'ENDERECO'
+      Size = 200
+    end
+    object cdsFazendasCNPJ: TStringField
+      FieldName = 'CNPJ'
+      Size = 14
+    end
+  end
+  object tabAnimal: TFDTable
+    Active = True
+    IndexFieldNames = 'ID'
+    Connection = DmConexao.sqlFBConexao
+    UpdateOptions.UpdateTableName = 'ANIMAL'
+    TableName = 'ANIMAL'
+    Left = 144
+    Top = 144
+    object tabAnimalID: TIntegerField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'ID'
+      Origin = 'ID'
+    end
+    object tabAnimalTAG: TIntegerField
+      FieldName = 'TAG'
+      Origin = 'TAG'
+      Required = True
+    end
+    object tabAnimalFAZENDA_ID: TIntegerField
+      FieldName = 'FAZENDA_ID'
+      Origin = 'FAZENDA_ID'
+      Required = True
+    end
+  end
+  object dsAnimal: TDataSource
+    DataSet = tabAnimal
+    Left = 144
+    Top = 200
+  end
+  object qryInserir: TFDQuery
+    Connection = DmConexao.sqlFBConexao
+    SQL.Strings = (
+      'insert into animal (tag,fazenda_id) values (:tag, :fazenda_id)')
+    Left = 144
+    Top = 256
+    ParamData = <
+      item
+        Name = 'TAG'
+        ParamType = ptInput
+      end
+      item
+        Name = 'FAZENDA_ID'
+        ParamType = ptInput
+      end>
+  end
+  object qryPesquisar: TFDQuery
+    Connection = DmConexao.sqlFBConexao
+    SQL.Strings = (
+      'select a.id, a.tag,a.fazenda_id,f.nome  From Animal a'
+      'Inner Join Fazenda f on (f.id = a.fazenda_id) '
+      'where tag like :tag')
+    Left = 80
+    Top = 256
+    ParamData = <
+      item
+        Name = 'TAG'
+        DataType = ftString
+        ParamType = ptInput
+        Size = 30
+      end>
+  end
+end

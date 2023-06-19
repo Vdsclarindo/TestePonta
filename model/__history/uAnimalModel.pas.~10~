@@ -1,0 +1,17 @@
+unit uAnimalModel;
+
+interface
+
+type
+  TAnimal  = class
+  private
+  public
+   property Id: Integer;
+   property Tag: string;
+   property Fazenda : Integer;
+
+  end;
+
+implementation
+
+end.

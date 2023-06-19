@@ -1,0 +1,33 @@
+unit uAnimalModel;
+
+interface
+
+type
+  TAnimal  = class
+  private
+    FId: Integer;
+    FTag: integer;
+    procedure SetId(const Value: Integer);
+    procedure SetTag(const Value: integer);
+  public
+   property Id: Integer read FId write SetId;
+   property Tag: integer read FTag write SetTag;
+  end;
+
+implementation
+
+{ TAnimal }
+
+procedure TAnimal.SetId(const Value: Integer);
+begin
+  FId := Value;
+end;
+
+procedure TAnimal.SetTag(const Value: integer);
+begin
+  if Length(Value) > 15  then
+    //raise Exception.Create('O Valor não pode ter mais que 15 caracteres');
+  FTag := Value;
+end;
+
+end.

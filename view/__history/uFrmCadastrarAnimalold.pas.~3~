@@ -1,0 +1,331 @@
+unit uFrmCadastrarAnimalold;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Vcl.Buttons, Vcl.Grids,
+  Vcl.DBGrids, Vcl.ComCtrls, Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Data.DB, Vcl.ImgList, System.Actions, Vcl.ActnList, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Mask, Vcl.DBCtrls, uAnimalModel, uDmFazenda,uFrmCadastrarBasico,
+  Vcl.DBLookup, RxLookup;
+
+type
+  TOperacao = (opNovo, opAlterar, opNavegar);
+
+  TFrmCadastrarAnimalold = class(TForm)
+    dsListagem: TDataSource;
+    PanelTitulo: TPanel;
+    lbl1: TLabel;
+    btnFechar: TImage;
+    pnl1: TPanel;
+    pgcPrincipal: TPageControl;
+    pgListagem: TTabSheet;
+    GridListagem: TDBGrid;
+    Panel1: TPanel;
+    Label1: TLabel;
+    edtPesquisa: TEdit;
+    pgCadastro: TTabSheet;
+    lbl3: TLabel;
+    btnPesquisar: TImage;
+    btnGravar: TImage;
+    btnNovo: TImage;
+    btnAlterar: TImage;
+    btnCancelar: TImage;
+    btnExcluir: TImage;
+    Label2: TLabel;
+    dsFazenda: TDataSource;
+    edtTag: TEdit;
+    cbxFazenda: TDBLookupComboBox;
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure GridListagemDblClick(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
+    procedure btnPesquisarClick(Sender: TObject);
+  private
+    FOperacao: TOperacao;
+  public
+    procedure Novo;
+    procedure Detalhar;
+    procedure Configuracoes;
+    procedure Pesquisar;
+    procedure CarregarAnimal;
+    procedure Listar;
+    procedure Alterar;
+    procedure Excluir;
+    procedure Inserir;
+    procedure Gravar;
+    procedure HabilitarControles(Operacoes : TOperacao);
+  end;
+
+var
+  FrmCadastrarAnimalold: TFrmCadastrarAnimalold;
+
+implementation
+
+uses
+  uAnimalController, uDmAnimal;
+
+{$R *.dfm}
+
+procedure TFrmCadastrarAnimalold.Alterar;
+var
+  Animal : TAnimal;
+  AnimalController : TAnimalController;
+  sErro : string;
+begin
+  Animal := TAnimal.Create;
+  AnimalController := TAnimalController.Create;
+  try
+    with Animal do
+    begin
+      Id      := dsListagem.DataSet.FieldByName('id').AsInteger;
+      Tag     := StrToInt(edtTag.Text);
+      //Fazenda := StrToInt(edtTag.Text);
+    end;
+    if AnimalController.Alterar(Animal, sErro) = False then
+      raise Exception.Create(sErro);
+  finally
+    FreeAndNil(AnimalController);
+    FreeAndNil(Animal);
+  end;
+
+end;
+
+procedure TFrmCadastrarAnimalold.CarregarAnimal;
+var
+  Animal : TAnimal;
+  AnimalController : TAnimalController;
+begin
+  Animal := TAnimal.Create;
+  AnimalController := TAnimalController.Create;
+  try
+    AnimalController.CarregarAnimal(Animal, dsListagem.DataSet.FieldByName('id').AsInteger);
+    with Animal do
+    begin
+      edtTag.Text := IntToStr(Tag);
+      // := Fazenda
+    end;
+  finally
+    FreeAndNil(AnimalController);
+    FreeAndNil(Animal);
+  end;
+end;
+
+procedure TFrmCadastrarAnimalold.Configuracoes;
+begin
+  pgListagem.TabVisible := False;
+  pgCadastro.TabVisible := False;
+  pgcPrincipal.ActivePage := pgListagem;
+end;
+
+procedure TFrmCadastrarAnimalold.Detalhar;
+begin
+  CarregarAnimal;
+  HabilitarControles(opNavegar);
+  FOperacao := opNavegar;
+  pgcPrincipal.ActivePage := pgCadastro;
+end;
+
+procedure TFrmCadastrarAnimalold.Excluir;
+var
+  AnimalController : TAnimalController;
+  sErro: string;
+begin
+  AnimalController := TAnimalController.Create;
+  try
+    if (DmAnimal.cdsPesquisar.Active) and (DmAnimal.cdsPesquisar.RecordCount > 0) then
+    begin
+      if MessageDlg('Deseja realmente excluir?',mtConfirmation,[mbYes,mbNo],0) = IDYES then
+      begin
+        if AnimalController.Excluir(DmAnimal.cdsPesquisar.FieldByName('id').AsInteger, sErro) = False then
+          raise Exception.Create(sErro);
+        AnimalController.Pesquisar(edtPesquisa.Text);
+      end;
+    end
+    else
+      raise Exception.Create('Não foi encontrado nenhum registro para exclusão.');
+  finally
+    FreeAndNil(AnimalController);
+  end;
+
+end;
+
+procedure TFrmCadastrarAnimalold.FormCreate(Sender: TObject);
+begin
+  DmAnimal := TDmAnimal.Create(nil);
+  DmAnimal.CdsFazendas.Open;
+end;
+
+procedure TFrmCadastrarAnimalold.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(DmAnimal);
+end;
+
+procedure TFrmCadastrarAnimalold.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  if Key = #13 then
+  begin
+    Key := #0;
+    Perform(WM_NEXTDLGCTL,0,0);
+  end;
+
+end;
+
+procedure TFrmCadastrarAnimalold.FormShow(Sender: TObject);
+begin
+  Configuracoes;
+end;
+
+procedure TFrmCadastrarAnimalold.Gravar;
+var
+  AnimalController : TAnimalController;
+begin
+  AnimalController := TAnimalController.Create;
+  try
+    case FOperacao of
+      opNovo: Inserir;
+      opAlterar: Alterar;
+    end;
+    AnimalController.Pesquisar(edtPesquisa.Text);
+  finally
+    FreeAndNil(AnimalController);
+  end;
+
+end;
+
+procedure TFrmCadastrarAnimalold.GridListagemDblClick(Sender: TObject);
+begin
+  Detalhar;
+end;
+
+procedure TFrmCadastrarAnimalold.HabilitarControles(Operacoes: TOperacao);
+begin
+
+  case Operacoes of
+
+    opNovo,opAlterar:
+    begin
+      btnGravar.Enabled   := True;
+      btnAlterar.Enabled  := False;
+      btnCancelar.Enabled := True;
+      btnFechar.Enabled   := False;
+      //btnListar.Enabled   := False;
+      edtTag.Enabled      := True;
+    end;
+    opNavegar:
+    begin
+      btnGravar.Enabled   := False;
+      btnAlterar.Enabled  := True;
+      btnCancelar.Enabled := False;
+      btnFechar.Enabled   := True;
+      //btnListar.Enabled   := True;
+      edtTag.Enabled      := False;
+    end;
+
+  end;
+
+end;
+
+procedure TFrmCadastrarAnimalold.Inserir;
+var
+  Animal : TAnimal;
+  AnimalController : TAnimalController;
+  sErro : string;
+begin
+  Animal := TAnimal.Create;
+  AnimalController := TAnimalController.Create;
+  try
+    with Animal do
+    begin
+      Tag      := StrToInt(edtTag.Text);
+      Fazenda  := DmAnimal.cdsFazendas.FieldByName('id').AsInteger;
+    end;
+    if AnimalController.Inserir(Animal,sErro) = False then
+      raise Exception.Create(sErro);
+  finally
+    FreeAndNil(AnimalController);
+    FreeAndNil(Animal);
+  end;
+
+end;
+
+procedure TFrmCadastrarAnimalold.Listar;
+begin
+  pgcPrincipal.ActivePage := pgListagem;
+end;
+
+procedure TFrmCadastrarAnimalold.Novo;
+begin
+  FOperacao := opNovo;
+  pgcPrincipal.ActivePage := pgCadastro;
+end;
+
+procedure TFrmCadastrarAnimalold.Pesquisar;
+var
+  AnimalController : TAnimalController;
+begin
+  AnimalController := TAnimalController.Create;
+  try
+    AnimalController.Pesquisar(edtPesquisa.Text);
+  finally
+    FreeAndNil(AnimalController);
+  end;
+end;
+
+procedure TFrmCadastrarAnimalold.SpeedButton1Click(Sender: TObject);
+begin
+  Pesquisar;
+end;
+
+procedure TFrmCadastrarAnimalold.btnCancelarClick(Sender: TObject);
+begin
+  HabilitarControles(opNavegar);
+  pgcPrincipal.ActivePage := pgListagem;
+end;
+
+procedure TFrmCadastrarAnimalold.btnFecharClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFrmCadastrarAnimalold.btnNovoClick(Sender: TObject);
+begin
+  Novo;
+  HabilitarControles(opNovo);
+end;
+
+procedure TFrmCadastrarAnimalold.btnPesquisarClick(Sender: TObject);
+begin
+  Pesquisar;
+end;
+
+procedure TFrmCadastrarAnimalold.btnGravarClick(Sender: TObject);
+begin
+  Gravar;
+  HabilitarControles(opNavegar);
+end;
+
+procedure TFrmCadastrarAnimalold.btnExcluirClick(Sender: TObject);
+begin
+  Excluir;
+end;
+
+procedure TFrmCadastrarAnimalold.btnAlterarClick(Sender: TObject);
+begin
+  FOperacao := opAlterar;
+  HabilitarControles(opAlterar);
+end;
+
+end.

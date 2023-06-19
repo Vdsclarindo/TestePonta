@@ -1,0 +1,44 @@
+unit uFrmPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+
+type
+  TFrmPrincipal = class(TForm)
+    menu: TMainMenu;
+    N1: TMenuItem;
+    Animal1: TMenuItem;
+    procedure Animal1Click(Sender: TObject);
+  private
+    procedure AbrirAnimal;
+  end;
+
+var
+  FrmPrincipal: TFrmPrincipal;
+
+implementation
+
+uses
+  uFrmCadastrarAnimal;
+
+{$R *.dfm}
+
+procedure TFrmPrincipal.AbrirAnimal;
+begin
+  FrmCadastrarAnimal := TFrmCadastrarAnimal.create(nill);
+  try
+    FrmCadastrarAnimal.showModal;
+  finally
+    FreeAndNil(FrmCadastrarAnimal);
+  end;
+end;
+
+procedure TFrmPrincipal.Animal1Click(Sender: TObject);
+begin
+  AbrirAnimal;
+end;
+
+end.

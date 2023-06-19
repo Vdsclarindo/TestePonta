@@ -1,0 +1,124 @@
+object DmFazenda: TDmFazenda
+  OldCreateOrder = False
+  Height = 196
+  Width = 336
+  object sqlPesquisar: TSQLDataSet
+    Active = True
+    CommandText = 'select *  From Fazenda where NOME like :nome'
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftString
+        Name = 'nome'
+        ParamType = ptInput
+      end>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 24
+    Top = 16
+  end
+  object dsPesquisar: TDataSetProvider
+    DataSet = sqlPesquisar
+    Left = 24
+    Top = 72
+  end
+  object cdsPesquisar: TClientDataSet
+    Aggregates = <>
+    Params = <
+      item
+        DataType = ftString
+        Name = 'nome'
+        ParamType = ptInput
+      end>
+    ProviderName = 'dsPesquisar'
+    Left = 24
+    Top = 126
+    object cdsPesquisarID: TIntegerField
+      FieldName = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cdsPesquisarNOME: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'NOME'
+      Required = True
+      Size = 50
+    end
+    object cdsPesquisarENDERECO: TStringField
+      DisplayLabel = 'Endere'#231'o'
+      FieldName = 'ENDERECO'
+      Size = 100
+    end
+    object cdsPesquisarCNPJ: TStringField
+      FieldName = 'CNPJ'
+      Size = 14
+    end
+  end
+  object sqlInserir: TSQLDataSet
+    CommandText = 
+      'insert into fazenda(nome,endereco,cnpj) values (:nome,:endereco,' +
+      ':cnpj)'
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'nome'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftUnknown
+        Name = 'endereco'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftUnknown
+        Name = 'cnpj'
+        ParamType = ptInput
+      end>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 88
+    Top = 16
+  end
+  object sqlAlterar: TSQLDataSet
+    CommandText = 
+      'update fazenda set nome = :nome, endereco =:endereco, cnpj =:cnp' +
+      'j  where (id = :id)'
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftString
+        Name = 'nome'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftString
+        Name = 'endereco'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftString
+        Name = 'cnpj'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftUnknown
+        Name = 'id'
+        ParamType = ptInput
+      end>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 152
+    Top = 16
+  end
+  object sqlExcluir: TSQLDataSet
+    CommandText = 'delete from fazenda where id =:id'
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'id'
+        ParamType = ptInput
+      end>
+    SQLConnection = DmConexao.sqlConexao
+    Left = 217
+    Top = 16
+  end
+end

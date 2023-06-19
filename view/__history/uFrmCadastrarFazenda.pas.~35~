@@ -1,0 +1,357 @@
+unit uFrmCadastrarFazenda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFrmCadastrarBasico, Data.DB,
+  Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.Imaging.pngimage,
+  Vcl.ExtCtrls, Vcl.Mask, Vcl.DBCtrls,uDmFazenda, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TOperacao = (opNovo, opAlterar, opNavegar);
+  TFrmCadastrarFazenda = class(TFrmCadastroBasico)
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    edtNome: TEdit;
+    edtEndereco: TEdit;
+    edtCNPJ: TEdit;
+    qryPesquisar: TFDQuery;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure GridListagemDblClick(Sender: TObject);
+    procedure btnPesquisarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+  private
+    FOperacao: TOperacao;
+  public
+    procedure Novo;
+    procedure Detalhar;
+    procedure Configuracoes;
+    procedure Pesquisar;
+    procedure CarregarFazenda;
+    procedure Alterar;
+    procedure Excluir;
+    procedure Inserir;
+    procedure Gravar;
+    procedure HabilitarControles(Operacoes : TOperacao);
+    procedure ValidarCampos;
+    procedure EnabledBtnNovo;
+    procedure EnabledBtnAlterar;
+    procedure EnabledBtnApagar;
+    procedure EnabledBtnGravar;
+    procedure EnabledBtnCancelar;
+    procedure TrueEnabledBtnNovo;
+    procedure TrueEnabledBtnAlterar;
+    procedure TrueEnabledBtnApagar;
+    procedure TrueEnabledBtnGravar;
+    procedure TrueEnabledBtnCancelar;
+  end;
+
+var
+  FrmCadastrarFazenda: TFrmCadastrarFazenda;
+
+implementation
+
+uses
+  uFazendaController, uFazendaModel;
+
+{$R *.dfm}
+
+procedure TFrmCadastrarFazenda.Alterar;
+var
+  Fazenda : TFazenda;
+  FazendaController : TFazendaController;
+  sErro : string;
+begin
+  Fazenda := TFazenda.Create;
+  FazendaController := TFazendaController.Create;
+  try
+    with Fazenda do
+    begin
+      Id        := qryPesquisar.FieldByName('id').AsInteger;
+      Nome      := edtNome.Text;
+      Endereco  := edtEndereco.Text;
+      CNPJ      := edtCNPJ.Text;
+    end;
+    if FazendaController.Alterar(Fazenda, sErro) = False then
+      raise Exception.Create(sErro);
+  finally
+    FreeAndNil(FazendaController);
+    FreeAndNil(Fazenda);
+  end;
+  
+end;
+
+
+procedure TFrmCadastrarFazenda.CarregarFazenda;
+var
+  Fazenda : TFazenda;
+  FazendaController : TFazendaController;
+begin
+  Fazenda := TFazenda.Create;
+  FazendaController := TFazendaController.Create;
+  try
+    FazendaController.CarregarFazenda(Fazenda, qryPesquisar.FieldByName('id').AsInteger);
+    with Fazenda do
+    begin
+      edtNome.Text     := Nome;
+      edtEndereco.Text := Endereco;
+      edtCNPJ.Text     := CNPJ;
+    end;
+  finally
+    FreeAndNil(FazendaController);
+    FreeAndNil(Fazenda);
+  end;
+end;
+
+procedure TFrmCadastrarFazenda.Configuracoes;
+begin
+  pgListagem.TabVisible := False;
+  pgCadastro.TabVisible := False;
+  pgcPrincipal.ActivePage := pgListagem;
+end;
+
+procedure TFrmCadastrarFazenda.Detalhar;
+begin
+  CarregarFazenda;
+  HabilitarControles(opNavegar);
+  FOperacao := opNavegar;
+  pgcPrincipal.ActivePage := pgCadastro;
+end;
+
+
+procedure TFrmCadastrarFazenda.TrueEnabledBtnAlterar;
+begin
+  btnAlterar.Enabled := True;
+  btnAlterar.Cursor  := crHandPoint;
+end;
+
+procedure TFrmCadastrarFazenda.TrueEnabledBtnApagar;
+begin
+  btnExcluir.Enabled := True;
+  btnExcluir.Cursor  := crHandPoint;
+end;
+
+procedure TFrmCadastrarFazenda.TrueEnabledBtnCancelar;
+begin
+  btnCancelar.Enabled := True;
+  btnCancelar.Cursor  := crHandPoint;
+end;
+
+procedure TFrmCadastrarFazenda.TrueEnabledBtnGravar;
+begin
+  btnGravar.Enabled := True;
+  btnGravar.Cursor  := crHandPoint;
+end;
+
+procedure TFrmCadastrarFazenda.TrueEnabledBtnNovo;
+begin
+  btnNovo.Enabled := True;
+  btnNovo.Cursor  := crHandPoint;
+end;
+
+procedure TFrmCadastrarFazenda.Excluir;
+var
+  FazendaController : TFazendaController;
+  sErro: string;
+begin
+  FazendaController := TFazendaController.Create;
+  try
+    if (qryPesquisar.Active) and (qryPesquisar.RecordCount > 0) then
+    begin
+      if MessageDlg('Deseja realmente excluir?',mtConfirmation,[mbYes,mbNo],0) = IDYES then
+      begin
+        if FazendaController.Excluir(qryPesquisar.FieldByName('id').AsInteger, sErro) = False then
+          raise Exception.Create(sErro);
+        FazendaController.Pesquisar(edtPesquisa.Text);
+      end;
+    end
+    else
+      raise Exception.Create('Não foi encontrado nenhum registro para exclusão.');
+  finally
+    FreeAndNil(FazendaController);
+  end;
+  pgcPrincipal.ActivePage := pgListagem;
+  Pesquisar;
+end;
+
+procedure TFrmCadastrarFazenda.FormCreate(Sender: TObject);
+begin
+  DmFazenda := TDmFazenda.Create(nil);
+end;
+
+
+
+procedure TFrmCadastrarFazenda.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(DmFazenda);
+end;
+
+
+
+procedure TFrmCadastrarFazenda.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  if Key = #13 then
+  begin
+    Key := #0;
+    Perform(WM_NEXTDLGCTL,0,0);
+  end;
+
+end;
+
+procedure TFrmCadastrarFazenda.FormShow(Sender: TObject);
+begin
+  Configuracoes;
+end;
+
+procedure TFrmCadastrarFazenda.Gravar;
+var
+  FazendaController : TFazendaController;
+begin
+  FazendaController := TFazendaController.Create;
+  try
+    case FOperacao of
+      opNovo: Inserir;
+      opAlterar: Alterar;
+    end;
+    FazendaController.Pesquisar(edtPesquisa.Text);
+  finally
+    FreeAndNil(FazendaController);
+  end;
+  pgcPrincipal.ActivePage := pgListagem;
+  Pesquisar;
+
+end;
+
+
+
+procedure TFrmCadastrarFazenda.GridListagemDblClick(Sender: TObject);
+begin
+  Detalhar;
+end;
+
+procedure TFrmCadastrarFazenda.HabilitarControles(Operacoes: TOperacao);
+begin
+
+  case Operacoes of
+
+    opNovo,opAlterar:
+    begin
+      btnGravar.Enabled   := True;
+      btnCancelar.Enabled := True;
+    end;
+    opNavegar:
+    begin
+      btnGravar.Enabled   := False;
+      btnCancelar.Enabled := False;
+      btnFechar.Enabled   := True;
+    end;
+
+  end;
+
+end;
+
+procedure TFrmCadastrarFazenda.Inserir;
+var
+  Fazenda : TFazenda;
+  FazendaController : TFazendaController;
+  sErro : string;
+begin
+  Fazenda := TFazenda.Create;
+  FazendaController := TFazendaController.Create;
+  try
+    with Fazenda do
+    begin
+      Nome      := edtNome.Text;
+      Endereco  := edtEndereco.Text;
+      CNPJ      := edtCNPJ.Text;
+    end;
+    if FazendaController.Inserir(Fazenda,sErro) = False then
+      raise Exception.Create(sErro);
+  finally
+    FreeAndNil(FazendaController);
+    FreeAndNil(Fazenda);
+  end;
+
+end;
+
+procedure TFrmCadastrarFazenda.Novo;
+begin
+  FOperacao := opNovo;
+  pgcPrincipal.ActivePage := pgCadastro;
+end;
+
+procedure TFrmCadastrarFazenda.Pesquisar;
+var
+  sqlOriginal : string;
+begin
+  sqlOriginal := 'select * from fazenda';
+
+  if edtPesquisa.Text <> '' then
+    qryPesquisar.SQL.Text := qryPesquisar.SQL.Text + ' where nome like '+QuotedStr('%' +edtPesquisa.Text+ '%');
+
+  qryPesquisar.Open;
+  qryPesquisar.First;
+end;
+
+procedure TFrmCadastrarFazenda.ValidarCampos;
+begin
+
+end;
+
+procedure TFrmCadastrarFazenda.btnCancelarClick(Sender: TObject);
+begin
+  HabilitarControles(opNavegar);
+  pgcPrincipal.ActivePage := pgListagem;
+end;
+
+procedure TFrmCadastrarFazenda.btnFecharClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFrmCadastrarFazenda.btnNovoClick(Sender: TObject);
+begin
+  Novo;
+  HabilitarControles(opNovo);
+end;
+
+
+procedure TFrmCadastrarFazenda.btnPesquisarClick(Sender: TObject);
+begin
+  Pesquisar;
+end;
+
+procedure TFrmCadastrarFazenda.btnGravarClick(Sender: TObject);
+begin
+  Gravar;
+  HabilitarControles(opNavegar);
+end;
+
+procedure TFrmCadastrarFazenda.btnExcluirClick(Sender: TObject);
+begin
+  Excluir;
+end;
+
+procedure TFrmCadastrarFazenda.btnAlterarClick(Sender: TObject);
+begin
+  FOperacao := opAlterar;
+  HabilitarControles(opAlterar);
+  CarregarFazenda;
+  pgcPrincipal.ActivePage := pgCadastro;
+end;
+
+end.

@@ -1,0 +1,33 @@
+unit uFazendaModel;
+
+interface
+
+type
+  TFazenda  = class
+  private
+    FId: Integer;
+    FNome: string;
+    procedure SetId(const Value: Integer);
+    procedure SetNome(const Value: string);
+
+  public
+   property Id: Integer read FId write SetId;
+   property Nome: string read FNome write SetNome;
+  end;
+
+
+implementation
+
+{ TFazenda }
+
+procedure TFazenda.SetId(const Value: Integer);
+begin
+  FId := Value;
+end;
+
+procedure TFazenda.SetNome(const Value: string);
+begin
+  FNome := Value;
+end;
+
+end.

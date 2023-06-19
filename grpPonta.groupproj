@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B5E18DAA-8731-47AE-8EA2-04918466D347}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="TestePonta.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Test\TestePontaTests.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TestePonta">
+        <MSBuild Projects="TestePonta.dproj"/>
+    </Target>
+    <Target Name="TestePonta:Clean">
+        <MSBuild Projects="TestePonta.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestePonta:Make">
+        <MSBuild Projects="TestePonta.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestePontaTests">
+        <MSBuild Projects="Test\TestePontaTests.dproj"/>
+    </Target>
+    <Target Name="TestePontaTests:Clean">
+        <MSBuild Projects="Test\TestePontaTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestePontaTests:Make">
+        <MSBuild Projects="Test\TestePontaTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TestePonta;TestePontaTests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TestePonta:Clean;TestePontaTests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TestePonta:Make;TestePontaTests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

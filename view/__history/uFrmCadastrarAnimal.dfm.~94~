@@ -1,0 +1,442 @@
+inherited FrmCadastrarAnimal: TFrmCadastrarAnimal
+  Caption = 'FrmCadastrarAnimal'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited PanelTitulo: TPanel
+    inherited lbl1: TLabel
+      Left = 292
+      Top = 6
+      Width = 211
+      Caption = 'Cadastro de Animal'
+      ExplicitLeft = 292
+      ExplicitTop = 6
+      ExplicitWidth = 211
+    end
+  end
+  inherited pnl1: TPanel
+    inherited btnGravar: TImage
+      OnClick = btnGravarClick
+    end
+    inherited btnNovo: TImage
+      OnClick = btnNovoClick
+    end
+    inherited btnAlterar: TImage
+      OnClick = btnAlterarClick
+    end
+    inherited btnCancelar: TImage
+      OnClick = btnCancelarClick
+    end
+    inherited btnExcluir: TImage
+      OnClick = btnExcluirClick
+    end
+    object btnRelatorio: TImage
+      Left = 217
+      Top = 3
+      Width = 35
+      Height = 39
+      Cursor = crHandPoint
+      Picture.Data = {
+        0954506E67496D61676589504E470D0A1A0A0000000D49484452000000200000
+        00200806000000737A7AF4000000097048597300000B1300000B1301009A9C18
+        000001F64944415478DAED97CB4EC2401486A794FBAD091058B0E4615CA8D195
+        892B589BF804C6048D2BD7BE80C6A5461375E1CEB8D647606B020B08054C8196
+        FA9F09355C0AB44D2DA67A92492F33F39FAF73CE746604B666137E25802CCB07
+        B86CEBBA1EB12D28086F9D4EA75A2C163F1D01B4DBED2D883CA09098ED2F1A8D
+        460CE0AFE9747A03FD152700A7E8789C4824D87038B4E53C180C324DD358BFDF
+        A7C7E7542AB50DADA522660067E8744400B55A8D7F9155CBE5722C93C970F031
+        C4132076A0A7790290CD66390442C00683012FD0BA4926937BB8EA9E0190CD40
+        5C6124CA9E021810148A712E5D20310F3D053020144561AAAA529256E2F1F8E5
+        8F0184C3612649D2D43B9A19C801D6EBF5582010B885EEFEE4CC7015C0CCE094
+        954A2503E01EBA65E8CBFF00B60128B6D16894DF5352A11D8F2DB59B35A3DE55
+        00721E0A85F83D4D2B7242491789CCAF5746BDBF4240731C73D8925372D66C36
+        DD05A0E13742B0CA2804C64AEA9F10E4F3799EF5B3D66AB57899ACEF76BBACD1
+        68B80B4042A228CE01D00684DA4CD61BEFFC158242A1C0B0A65B728A4D29ABD7
+        EB3E1B813F05E0785BBEC8E8073606B8836E6515C0261A3C3A3D9898196DCBA8
+        00E41C8BDA0974BF4F4DA61E405BC5D0EFA29368DDCD62834315FF88F7582C76
+        8DFB97A9BA25D4B4BB94987B07585A9F3F003095546B3F1D7F014904F63041C5
+        B3B80000000049454E44AE426082}
+      OnClick = btnRelatorioClick
+    end
+  end
+  inherited pgcPrincipal: TPageControl
+    inherited pgListagem: TTabSheet
+      inherited GridListagem: TDBGrid
+        DataSource = dsListagem
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        ReadOnly = True
+        OnDblClick = GridListagemDblClick
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'ID'
+            Visible = False
+          end
+          item
+            Expanded = False
+            FieldName = 'TAG'
+            Title.Caption = 'Tag'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'FAZENDA_ID'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            Width = -1
+            Visible = False
+          end
+          item
+            Expanded = False
+            FieldName = 'NOME'
+            Title.Caption = 'Nome'
+            Width = 297
+            Visible = True
+          end>
+      end
+      inherited Panel1: TPanel
+        inherited Label1: TLabel
+          Width = 18
+          Caption = 'Tag'
+          ExplicitWidth = 18
+        end
+        inherited btnPesquisar: TImage
+          OnClick = btnPesquisarClick
+        end
+      end
+    end
+    inherited pgCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      object lbl3: TLabel
+        Left = 3
+        Top = 8
+        Width = 18
+        Height = 13
+        Caption = 'Tag'
+      end
+      object Label2: TLabel
+        Left = 3
+        Top = 65
+        Width = 41
+        Height = 13
+        Caption = 'Fazenda'
+      end
+      object btnAdicionar: TImage
+        Left = 476
+        Top = 83
+        Width = 25
+        Height = 22
+        Cursor = crHandPoint
+        Picture.Data = {
+          0954506E67496D61676589504E470D0A1A0A0000000D49484452000000180000
+          00180806000000E0773DF8000000097048597300000B1300000B1301009A9C18
+          0000027A4944415478DAC5954B6B5A4114C7EF55AB9BD4AE8580D09709EA46C5
+          9D880882888FB4D4B6D07E8AA64DBB74D7987C8C3E6D5ACC271015145FF58194
+          A6F4B109BA7261537C5C5FFD8F64E4CECDBD26424B060E67C699F9FFCE3D6766
+          E4B9FFDCF84B05349B4DED783CDE9ACD66E1E9746A835F8771E81F63FAF36432
+          49EAF5FAA4C562115606D46AB5BB108BA37B9D88528338271EC37E00F4CCE572
+          7DBA10209148A84D26D32E363E9108C9898BE7F601D9E1797EBA1450AFD7F757
+          151759DCED76EF2802485AE00EE4C447A311A7D3E9E6E37EBFCFA9D56A25C896
+          C7E3499E01908242E40BBA37E42227A266B379BEB6D1682C6032C1FCEA743A1B
+          D16854600088FE3E16BC534A0B01E0B4D0342A0288A145BD5EEF070650AD56DF
+          62F28152CE09C06AB5D2609602B0F7B5CFE77BC4002A95CA37B85BE29C0B82B0
+          D844C676BB7DBEB6582C2E6A401AE94B6A7204C006032897CB27706B3472B2C1
+          68349E7B535BAD16D76EB7398D46B300E05EFCF1FBFD571940A9543AC1E41A5D
+          4436AC02A05F701AE06F00AE31007CF611266E53009E086E381C3229723A9DF3
+          B5F97C9E8998F4552AD5A26EF05F0381C0260328140A6F30F950A970A4C8369B
+          8DA693D36AB5CB2EE22B001E33805C2E17C5357FBF0C408B8C743200E989C3F8
+          5E30183C9016F90A52422EDA4D39C06030604E1105C83C213F7BBDDEE6998B46
+          5A369BBD83AFF828072035C0D33CEF77BB5D26E762C3098A84C3E143C5C72E93
+          C9ECC16D9FF7B0C989E3B7DD5028F45CF1B1230D0B55E974FA25BA4F57148FE3
+          B2BE88C562CB9F6BDA52A954049BF6A4359111FF8EB46C8BD37221002D3CF21D
+          814018433BFCFAA9E831AC024B1A0C864387C33152D2B8DC3FFD7FD1FE02269F
+          6146B70157DF0000000049454E44AE426082}
+        OnClick = btnAdicionarClick
+      end
+      object cbxFazenda: TDBLookupComboBox
+        Left = 3
+        Top = 84
+        Width = 467
+        Height = 21
+        KeyField = 'ID'
+        ListField = 'NOME'
+        ListSource = dsFazenda
+        TabOrder = 0
+      end
+      object edtTag: TEdit
+        Left = 3
+        Top = 27
+        Width = 467
+        Height = 21
+        MaxLength = 15
+        NumbersOnly = True
+        TabOrder = 1
+      end
+    end
+  end
+  inherited dsListagem: TDataSource
+    DataSet = qryPesquisar
+    Left = 724
+    Top = 217
+  end
+  object dsFazenda: TDataSource
+    AutoEdit = False
+    DataSet = DmAnimal.cdsFazendas
+    Left = 724
+    Top = 273
+  end
+  object qryPesquisar: TFDQuery
+    Connection = DmConexao.sqlFBConexao
+    SQL.Strings = (
+      'select a.id, a.tag,a.fazenda_id,f.nome  From Animal a'
+      'Inner Join Fazenda f on (f.id = a.fazenda_id) ')
+    Left = 728
+    Top = 168
+  end
+  object frxRelatorio: TfrxReport
+    Version = '5.6'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 45096.044080463000000000
+    ReportOptions.LastChange = 45096.048161851850000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      ''
+      'begin'
+      ''
+      'end.')
+    Left = 724
+    Top = 323
+    Datasets = <
+      item
+        DataSet = frxDb
+        DataSetName = 'frxDBDataset1'
+      end>
+    Variables = <>
+    Style = <
+      item
+        Name = 'Title'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -16
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Fill.BackColor = clGray
+      end
+      item
+        Name = 'Header'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clMaroon
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+      end
+      item
+        Name = 'Group header'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clMaroon
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Fill.BackColor = 16053492
+      end
+      item
+        Name = 'Data'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+      end
+      item
+        Name = 'Group footer'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+      end
+      item
+        Name = 'Header line'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = [ftBottom]
+        Frame.Width = 2.000000000000000000
+      end>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        Height = 26.456710000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          Align = baWidth
+          Width = 718.110700000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Fill.BackColor = clGray
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Relat'#243'rio de Dados Gerais')
+          ParentFont = False
+          Style = 'Title'
+          VAlign = vaCenter
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        Height = 34.015770000000000000
+        Top = 68.031540000000000000
+        Width = 718.110700000000000000
+        object Memo2: TfrxMemoView
+          Width = 718.110236220472000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          Frame.Width = 2.000000000000000000
+          ParentFont = False
+          Style = 'Header line'
+        end
+        object Memo3: TfrxMemoView
+          Width = 114.000000000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clMaroon
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            'TAG')
+          ParentFont = False
+          Style = 'Header'
+        end
+        object Memo4: TfrxMemoView
+          Left = 114.000000000000000000
+          Width = 372.000000000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clMaroon
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            'NOME')
+          ParentFont = False
+          Style = 'Header'
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        Height = 18.897650000000000000
+        Top = 162.519790000000000000
+        Width = 718.110700000000000000
+        DataSet = frxDb
+        DataSetName = 'frxDBDataset1'
+        RowCount = 0
+        object Memo5: TfrxMemoView
+          Width = 114.000000000000000000
+          Height = 18.897650000000000000
+          DataField = 'TAG'
+          DataSet = frxDb
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[frxDBDataset1."TAG"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+        object Memo6: TfrxMemoView
+          Left = 114.000000000000000000
+          Width = 372.000000000000000000
+          Height = 18.897650000000000000
+          DataField = 'NOME'
+          DataSet = frxDb
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[frxDBDataset1."NOME"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        Height = 26.456710000000000000
+        Top = 241.889920000000000000
+        Width = 718.110700000000000000
+        object Memo7: TfrxMemoView
+          Align = baWidth
+          Width = 718.110700000000000000
+          Frame.Typ = [ftTop]
+          Frame.Width = 2.000000000000000000
+        end
+        object Memo8: TfrxMemoView
+          Top = 1.000000000000000000
+          Height = 22.677180000000000000
+          AutoWidth = True
+          Memo.UTF8W = (
+            '[Date] [Time]')
+        end
+        object Memo9: TfrxMemoView
+          Align = baRight
+          Left = 642.520100000000000000
+          Top = 1.000000000000000000
+          Width = 75.590600000000000000
+          Height = 22.677180000000000000
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Page [Page#]')
+        end
+      end
+    end
+  end
+  object frxDb: TfrxDBDataset
+    UserName = 'frxDBDataset1'
+    CloseDataSource = False
+    DataSet = qryPesquisar
+    BCDToCurrency = False
+    Left = 724
+    Top = 379
+  end
+end

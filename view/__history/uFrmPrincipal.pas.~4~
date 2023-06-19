@@ -1,0 +1,62 @@
+unit uFrmPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+
+type
+  TFrmPrincipal = class(TForm)
+    menu: TMainMenu;
+    N1: TMenuItem;
+    Animal1: TMenuItem;
+    Fazenda1: TMenuItem;
+    procedure Animal1Click(Sender: TObject);
+    procedure Fazenda1Click(Sender: TObject);
+  private
+    procedure CadastroAnimal;
+    procedure CadastroFazenda;
+  end;
+
+var
+  FrmPrincipal: TFrmPrincipal;
+
+implementation
+
+uses
+  uFrmCadastrarAnimal, uFrmCadastrarFazenda;
+
+{$R *.dfm}
+
+procedure TFrmPrincipal.CadastroAnimal;
+begin
+  FrmCadastrarAnimal := TFrmCadastrarAnimal.create(nil);
+  try
+    FrmCadastrarAnimal.showModal;
+  finally
+    FreeAndNil(FrmCadastrarAnimal);
+  end;
+end;
+
+procedure TFrmPrincipal.CadastroFazenda;
+begin
+  FrmCadastrarFazenda := TFrmCadastrarFazenda.create(nil);
+  try
+    FrmCadastrarFazenda.showModal;
+  finally
+    FreeAndNil(FrmCadastrarFazenda);
+  end;
+end;
+
+procedure TFrmPrincipal.Animal1Click(Sender: TObject);
+begin
+  CadastroAnimal;
+end;
+
+procedure TFrmPrincipal.Fazenda1Click(Sender: TObject);
+begin
+  CadastroFazenda;
+end;
+
+end.

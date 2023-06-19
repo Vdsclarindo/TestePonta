@@ -1,0 +1,39 @@
+unit uAnimalModel;
+
+interface
+
+type
+  TAnimal  = class
+  private
+    FId: Integer;
+    FTag: integer;
+    FFazenda: Integer;
+    procedure SetId(const Value: Integer);
+    procedure SetTag(const Value: integer);
+    procedure SetFazenda(const Value: Integer);
+  public
+   property Id: Integer read FId write SetId;
+   property Tag: integer read FTag write SetTag;
+   property Fazenda: Integer read FFazenda write SetFazenda;
+  end;
+
+implementation
+
+{ TAnimal }
+
+procedure TAnimal.SetFazenda(const Value: Integer);
+begin
+  FFazenda := Value;
+end;
+
+procedure TAnimal.SetId(const Value: Integer);
+begin
+  FId := Value;
+end;
+
+procedure TAnimal.SetTag(const Value: integer);
+begin
+  FTag := Value;
+end;
+
+end.
