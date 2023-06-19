@@ -14,3 +14,4 @@ Layout limpo e intuitivo, com menus de navegação e ações de CRUD.
 Utilização de componentes do Delphi, como TDBGrid, TEdit, TButton, TActionList, etc.
 Documentação adequada do repositório, incluindo instruções de configuração, compilação e execução.
 
+# TestePonta
