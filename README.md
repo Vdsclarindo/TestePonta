@@ -1,3 +1,5 @@
+# TestePonta
+
 CRUD de Gerenciamento de Animais em Fazenda
 
 Este projeto em Delphi implementa um CRUD (Create, Read, Update, Delete) para gerenciar animais em uma fazenda. A aplicação utiliza um banco de dados Firebird para armazenar os dados.
@@ -14,5 +16,9 @@ Layout limpo e intuitivo, com menus de navegação e ações de CRUD.
 Utilização de componentes do Delphi, como TDBGrid, TEdit, TButton, TActionList, etc.
 Documentação adequada do repositório, incluindo instruções de configuração, compilação e execução.
 
-# TestePonta
+Ferramentas a serem instaladas
+
+ Firebird (versão 2.5) 
+
+
 
