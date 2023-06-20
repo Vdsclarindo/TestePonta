@@ -20,5 +20,8 @@ Ferramentas a serem instaladas
 
  Firebird (versão 2.5) 
 
+Versão Delphi
+XE5
+
 
 
