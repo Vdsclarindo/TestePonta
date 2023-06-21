@@ -18,10 +18,14 @@ Documentação adequada do repositório, incluindo instruções de configuraçã
 
 Ferramentas a serem instaladas
 
- Firebird (versão 2.5) 
+Firebird (versão 2.5) 
 
 Versão Delphi
 XE5
+
+Configurações
+
+É necessario cadastrar o caminho correto do Banco de dados no arquivo config.ini dentro da pasta do projeto. 
 
 
 
