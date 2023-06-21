@@ -1,5 +1,6 @@
 object DmConexao: TDmConexao
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 182
   Width = 242
   object sqlFBConexao: TFDConnection
