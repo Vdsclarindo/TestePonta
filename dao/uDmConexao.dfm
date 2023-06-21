@@ -5,11 +5,9 @@ object DmConexao: TDmConexao
   Width = 242
   object sqlFBConexao: TFDConnection
     Params.Strings = (
-      'Database=C:\Projetos\Testes\TestePonta\TESTEPONTA.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'DriverID=FB')
-    Connected = True
     LoginPrompt = False
     Left = 40
     Top = 24
