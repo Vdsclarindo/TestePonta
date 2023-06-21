@@ -54,6 +54,7 @@ type
     procedure Excluir;
     procedure Inserir;
     procedure Gravar;
+    procedure Adicionar;
     procedure HabilitarControles(Operacoes : TOperacao);
     procedure GerarRelatorio;
     procedure LimparListAnimais;
@@ -78,6 +79,41 @@ implementation
 
 
 {$R *.dfm}
+
+procedure TFrmCadastrarAnimal.Adicionar;
+var
+  Animal: TAnimal;
+begin
+
+  EnabledBtnNovo;
+
+  if edtTag.Text = '' then
+  begin
+    ShowMessage('Favor preencher o campo Tag.');
+    Exit;
+  end;
+
+  if cbxFazenda.Text = '' then
+  begin
+    ShowMessage('Favor preencher o campo Fazenda.');
+    Exit;
+  end;
+
+  ListaAnimais := TObjectList<TAnimal>.Create;
+
+  Animal := TAnimal.Create;
+  Animal.Tag     := edtTag.Text;
+  Animal.Fazenda := cbxFazenda.KeyValue;
+  ListaAnimais.Add(Animal);
+
+  if MessageDlg('Deseja adicionar mais um animal ?',mtConfirmation,[mbYes,mbNo],0) = IDYES then
+  begin
+    edtTag.Text := '';
+    cbxFazenda.KeyValue := -1;
+    edtTag.SetFocus;
+  end;
+
+end;
 
 procedure TFrmCadastrarAnimal.Alterar;
 var
@@ -372,17 +408,7 @@ end;
 
 procedure TFrmCadastrarAnimal.ValidarCampos;
 begin
-  if edtTag.Text = '' then
-  begin
-    ShowMessage('Favor preencher o campo Tag.');
-    Exit;
-  end;
 
-  if cbxFazenda.Text = '' then
-  begin
-    ShowMessage('Favor preencher o campo Fazenda.');
-    Exit;
-  end;
 end;
 
 procedure TFrmCadastrarAnimal.btnCancelarClick(Sender: TObject);
@@ -424,28 +450,8 @@ begin
 end;
 
 procedure TFrmCadastrarAnimal.btnAdicionarClick(Sender: TObject);
-var
-  Animal: TAnimal;
 begin
-
-  EnabledBtnNovo;
-
-  ValidarCampos;
-
-  ListaAnimais := TObjectList<TAnimal>.Create;
-
-  Animal := TAnimal.Create;
-  Animal.Tag     := edtTag.Text;
-  Animal.Fazenda := cbxFazenda.KeyValue;
-  ListaAnimais.Add(Animal);
-
-  if MessageDlg('Deseja adicionar mais um animal ?',mtConfirmation,[mbYes,mbNo],0) = IDYES then
-  begin
-    edtTag.Text := '';
-    cbxFazenda.KeyValue := -1;
-    edtTag.SetFocus;
-  end;
-
+  Adicionar;
 end;
 
 procedure TFrmCadastrarAnimal.btnAlterarClick(Sender: TObject);

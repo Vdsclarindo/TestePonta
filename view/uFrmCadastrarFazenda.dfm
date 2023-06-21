@@ -4,9 +4,12 @@ inherited FrmCadastrarFazenda: TFrmCadastrarFazenda
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
+  ExplicitWidth = 827
+  ExplicitHeight = 526
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanelTitulo: TPanel
+    ExplicitWidth = 821
     inherited lbl1: TLabel
       Left = 292
       Top = 6
@@ -18,6 +21,7 @@ inherited FrmCadastrarFazenda: TFrmCadastrarFazenda
     end
   end
   inherited pnl1: TPanel
+    ExplicitWidth = 821
     inherited btnGravar: TImage
       Top = 6
       OnClick = btnGravarClick
@@ -37,7 +41,13 @@ inherited FrmCadastrarFazenda: TFrmCadastrarFazenda
     end
   end
   inherited pgcPrincipal: TPageControl
+    ExplicitWidth = 821
+    ExplicitHeight = 414
     inherited pgListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 813
+      ExplicitHeight = 386
       inherited GridListagem: TDBGrid
         DataSource = dsListagem
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -71,6 +81,7 @@ inherited FrmCadastrarFazenda: TFrmCadastrarFazenda
           end>
       end
       inherited Panel1: TPanel
+        ExplicitWidth = 813
         inherited btnPesquisar: TImage
           OnClick = btnPesquisarClick
         end
@@ -79,6 +90,8 @@ inherited FrmCadastrarFazenda: TFrmCadastrarFazenda
     inherited pgCadastro: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
+      ExplicitWidth = 813
+      ExplicitHeight = 386
       object lbNome: TLabel
         Left = 8
         Top = 0

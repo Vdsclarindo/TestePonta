@@ -1,52 +1,7 @@
 object DmConexao: TDmConexao
   OldCreateOrder = False
-  Height = 255
-  Width = 511
-  object sqlConexao: TSQLConnection
-    DriverName = 'Firebird'
-    LoginPrompt = False
-    Params.Strings = (
-      'DriverUnit=Data.DBXFirebird'
-      
-        'DriverPackageLoader=TDBXDynalinkDriverLoader,DbxCommonDriver190.' +
-        'bpl'
-      
-        'DriverAssemblyLoader=Borland.Data.TDBXDynalinkDriverLoader,Borla' +
-        'nd.Data.DbxCommonDriver,Version=19.0.0.0,Culture=neutral,PublicK' +
-        'eyToken=91d62ebb5b0d1b1b'
-      
-        'MetaDataPackageLoader=TDBXFirebirdMetaDataCommandFactory,DbxFire' +
-        'birdDriver190.bpl'
-      
-        'MetaDataAssemblyLoader=Borland.Data.TDBXFirebirdMetaDataCommandF' +
-        'actory,Borland.Data.DbxFirebirdDriver,Version=19.0.0.0,Culture=n' +
-        'eutral,PublicKeyToken=91d62ebb5b0d1b1b'
-      'GetDriverFunc=getSQLDriverINTERBASE'
-      'LibraryName=dbxfb.dll'
-      'LibraryNameOsx=libsqlfb.dylib'
-      'VendorLib=fbclient.dll'
-      'VendorLibWin64=fbclient.dll'
-      'VendorLibOsx=/Library/Frameworks/Firebird.framework/Firebird'
-      'Database=C:\Projetos\Testes\TestePonta/TESTEPONTA.FDB'
-      'User_Name=sysdba'
-      'Password=masterkey'
-      'Role=RoleName'
-      'MaxBlobSize=-1'
-      'LocaleCode=0000'
-      'IsolationLevel=ReadCommitted'
-      'SQLDialect=3'
-      'CommitRetain=False'
-      'WaitOnLocks=True'
-      'TrimChar=False'
-      'BlobSize=-1'
-      'ErrorResourceFile='
-      'RoleName=RoleName'
-      'ServerCharSet='
-      'Trim Char=False')
-    Connected = True
-    Left = 24
-    Top = 16
-  end
+  Height = 182
+  Width = 242
   object sqlFBConexao: TFDConnection
     Params.Strings = (
       'Database=C:\Projetos\Testes\TestePonta\TESTEPONTA.FDB'
@@ -55,21 +10,21 @@ object DmConexao: TDmConexao
       'DriverID=FB')
     Connected = True
     LoginPrompt = False
-    Left = 144
-    Top = 112
+    Left = 40
+    Top = 24
   end
   object FDTransaction1: TFDTransaction
     Connection = sqlFBConexao
-    Left = 432
-    Top = 104
+    Left = 144
+    Top = 56
   end
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'Forms'
-    Left = 432
-    Top = 56
+    Left = 144
+    Top = 8
   end
   object FDPhysFBDriverLink1: TFDPhysFBDriverLink
-    Left = 432
-    Top = 152
+    Left = 144
+    Top = 104
   end
 end

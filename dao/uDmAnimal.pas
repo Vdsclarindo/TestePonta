@@ -47,12 +47,13 @@ uses
 
 procedure TDmAnimal.CarregarAnimal(Animal: TAnimal; Id: Integer);
 var
-  sql : TSQLDataSet;
+  sql : TFDQuery;
 begin
-  sql := TSqlDataSet.Create(nil);
+  sql := TFDQuery.Create(nil);
   try
-    sql.SQLConnection := DmConexao.sqlConexao;
-    sql.CommandText   := 'select * from animal where (id = ' + IntToStr(Id) + ' )';
+    sql.Close;
+    sql.Connection  := DmConexao.sqlFBConexao;
+    sql.SQL.Text    := 'select * from animal where (id = ' + IntToStr(Id) + ' )';
     sql.Open;
 
     with Animal do

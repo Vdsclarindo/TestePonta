@@ -40,12 +40,13 @@ uses
 
 procedure TDmFazenda.CarregarFazenda(Fazenda: TFazenda; Id: Integer);
 var
-  sql : TSQLDataSet;
+  sql : TFDQuery;
 begin
-  sql := TSqlDataSet.Create(nil);
+  sql := TFDQuery.Create(nil);
   try
-    sql.SQLConnection := DmConexao.sqlConexao;
-    sql.CommandText   := 'select * from Fazenda where (id = ' + IntToStr(Id) + ' )';
+    sql.Close;
+    sql.Connection := DmConexao.sqlFBConexao;
+    sql.SQL.Text   := 'select * from Fazenda where (id = ' + IntToStr(Id) + ' )';
     sql.Open;
 
     with Fazenda do

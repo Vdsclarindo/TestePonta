@@ -4,9 +4,12 @@ inherited FrmCadastrarAnimal: TFrmCadastrarAnimal
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
+  ExplicitWidth = 827
+  ExplicitHeight = 526
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanelTitulo: TPanel
+    ExplicitWidth = 821
     inherited lbl1: TLabel
       Left = 292
       Top = 6
@@ -18,6 +21,7 @@ inherited FrmCadastrarAnimal: TFrmCadastrarAnimal
     end
   end
   inherited pnl1: TPanel
+    ExplicitWidth = 821
     inherited btnGravar: TImage
       OnClick = btnGravarClick
     end
@@ -63,7 +67,14 @@ inherited FrmCadastrarAnimal: TFrmCadastrarAnimal
     end
   end
   inherited pgcPrincipal: TPageControl
+    ActivePage = pgCadastro
+    ExplicitWidth = 821
+    ExplicitHeight = 414
     inherited pgListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 813
+      ExplicitHeight = 386
       inherited GridListagem: TDBGrid
         DataSource = dsListagem
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -84,12 +95,6 @@ inherited FrmCadastrarAnimal: TFrmCadastrarAnimal
           item
             Expanded = False
             FieldName = 'FAZENDA_ID'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            Width = -1
             Visible = False
           end
           item
@@ -101,6 +106,7 @@ inherited FrmCadastrarAnimal: TFrmCadastrarAnimal
           end>
       end
       inherited Panel1: TPanel
+        ExplicitWidth = 813
         inherited Label1: TLabel
           Width = 18
           Caption = 'Tag'
@@ -114,6 +120,8 @@ inherited FrmCadastrarAnimal: TFrmCadastrarAnimal
     inherited pgCadastro: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
+      ExplicitWidth = 813
+      ExplicitHeight = 386
       object lbTag: TLabel
         Left = 3
         Top = 8

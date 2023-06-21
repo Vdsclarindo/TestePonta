@@ -12,7 +12,6 @@ uses
 
 type
   TDmConexao = class(TDataModule)
-    sqlConexao: TSQLConnection;
     sqlFBConexao: TFDConnection;
     FDTransaction1: TFDTransaction;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
